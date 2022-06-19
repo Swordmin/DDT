@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(SpriteRenderer))]
 public class HandVizualizer : MonoBehaviour

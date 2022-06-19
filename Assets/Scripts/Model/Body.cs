@@ -2,11 +2,12 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class Body : MonoBehaviour
+public abstract class Body : MonoBehaviour, IHealth
 {
 
     [SerializeField] private float _maxHealth, _currentHealth;
     [SerializeField] private float _damage;
+    [SerializeField] private AtackHand _atackHand;
 
     public UnityEvent<float, float> OnHealthChange;
 
@@ -49,9 +50,17 @@ public abstract class Body : MonoBehaviour
 
     public void Atack(Body body) 
     {
-        body.TakeDamage(Damage);
+        Vector2 instantiatePostition;
+        if (body.transform.position.x < transform.position.x)
+            instantiatePostition = new Vector2(transform.position.x - 1, transform.position.y);
+        else
+            instantiatePostition = new Vector2(transform.position.x + 1, transform.position.y);
+        AtackHand hand = Instantiate(_atackHand, instantiatePostition, _atackHand.transform.rotation);
+        hand.Initialized(HandType.Paper);
+        hand.SetDamage(_damage);
+        hand.Atack(body.transform);
     }
 
-
+    public void SetMaxHealth(float health) => _maxHealth = health;
 
 }

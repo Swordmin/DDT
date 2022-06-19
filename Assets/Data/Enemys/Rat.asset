@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Rat
   m_EditorClassIdentifier: 
   _name: Rat
-  _atackTime: 20
-  _atackCooldown: 0.5
+  _maxHealth: 100
+  _atackTime: 10
+  _atackCooldown: 0.25
   _favoriteHand: 0

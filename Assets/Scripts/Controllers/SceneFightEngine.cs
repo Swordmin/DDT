@@ -38,6 +38,7 @@ public class SceneFightEngine : MonoBehaviour
     public void EndFight() 
     {
         PlayerBody.Atack(CurrentEnemyBody);
+        CurrentEnemyBody.Atack(PlayerBody);
         PlayerBody.DamageClear();
     }
 
