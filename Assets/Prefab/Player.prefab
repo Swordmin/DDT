@@ -158,3 +158,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
+  _touchPostition: {x: 0, y: 0}
+  _damage: 0
+  _textEngine: {fileID: 5432447347020188690, guid: 7a6a0becd22f19947bc61a34cb463793, type: 3}
+  OnWin:
+    m_PersistentCalls:
+      m_Calls: []

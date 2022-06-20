@@ -9,7 +9,7 @@ public class PlayerHand : Hand
     [SerializeField] private Vector2 _touchPostition;
     [SerializeField] private float _damage; //TODO
     [SerializeField] private TextEngine _textEngine;
-    public UnityEvent<float> OnWin;
+    public event System.Action<float> OnWin;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -41,7 +41,7 @@ public class PlayerHand : Hand
         _damage = Random.Range(1, 10);
         OnWin?.Invoke(_damage);
         TextEngine text = Instantiate(_textEngine, transform.position, Quaternion.identity);
-        text.Draw(_damage.ToString(), Color.white, new Vector2(SceneFightEngine.Engine.PlayerBody.transform.position.x, SceneFightEngine.Engine.PlayerBody.transform.position.y + 1));
+        text.Draw($"{_damage}", Color.white, new Vector2(SceneFightEngine.Engine.PlayerBody.transform.position.x, SceneFightEngine.Engine.PlayerBody.transform.position.y + 1));
         hand.Lose();
     }
 

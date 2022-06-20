@@ -8,7 +8,12 @@ public class PlayerEngine : MonoBehaviour
 
     private void Awake()
     {
-        _hand.OnWin.AddListener(AddDamage);
+        _hand.OnWin += AddDamage;
+    }
+
+    private void OnDestroy()
+    {
+        _hand.OnWin -= AddDamage;
     }
 
     private void AddDamage(float damage) 

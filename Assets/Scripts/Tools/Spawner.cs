@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
@@ -18,6 +20,9 @@ public class Spawner : MonoBehaviour
 
     [SerializeField] private bool _spawn;
     [SerializeField] private List<EnemyHand> _hands;
+
+    public event System.Action OnSpawnEnd;
+
     private void Awake()
     {
         if (_playOnAwake)
@@ -26,13 +31,22 @@ public class Spawner : MonoBehaviour
             StartCoroutine(SpawnTick());
         }
     }
+
+    private void Start()
+    {
+        OnSpawnEnd += SceneFightEngine.Engine.EndFight;
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawCube(transform.position, new Vector3(_sizeX * 2, _sizeY * 2));
     }
 
-    public UnityEvent OnSpawnEnd;
+    private void OnDestroy()
+    {
+        OnSpawnEnd -= SceneFightEngine.Engine.EndFight;
+    }
 
     public void UpdateTime(float time) => _time = time;
     public void UpdateCooldown(float cooldown) => _cooldown = cooldown;

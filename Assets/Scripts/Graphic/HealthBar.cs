@@ -12,7 +12,12 @@ public class HealthBar : MonoBehaviour
     [SerializeField] float _duration = 1;
     private void Awake()
     {
-        _body.OnHealthChange.AddListener(UpdateBar);
+        _body.OnHealthChange += UpdateBar;
+    }
+
+    private void OnDestroy()
+    {
+        _body.OnHealthChange -= UpdateBar;
     }
 
     private void UpdateBar(float currentHealth, float maxHealth) 

@@ -22,12 +22,17 @@ public class EnemyHand : Hand
 
     private void Start()
     {
-        _spawner.OnSpawnEnd.AddListener(() => Lose());
+        _spawner.OnSpawnEnd += Lose;
         transform.DOLocalMoveX(-15, 5).SetEase(Ease.Linear).OnComplete(() =>
         {
             OnDie?.Invoke();
             Destroy(gameObject);
         });
+    }
+
+    private void OnDestroy()
+    {
+        _spawner.OnSpawnEnd -= Lose;
     }
 
     public void UpdateSpawner(Spawner spawner) => _spawner = spawner;
