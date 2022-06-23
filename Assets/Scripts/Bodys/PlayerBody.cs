@@ -7,7 +7,7 @@ public class PlayerBody : Body
 
     private void Start()
     {
-        SceneFightEngine.Engine.PlayerBody = this;
+        AllSceneServices.SceneServices.GetService<SceneFightService>().PlayerBody = this;
     }
 
 

@@ -1,36 +1,23 @@
 ﻿using System;
 using UnityEngine;
 
-public enum HandType 
-{
-    Paper = 0, 
-    Stone = 1,
-    Scissors = 2
-}
-public enum FightResultType 
-{
-    Win = 0,
-    Lose = 1,
-    Draw = 2
-}
 public class Hand : MonoBehaviour
 {
     [SerializeField] private HandType _type;
     public HandType Type => _type;
 
-    public void Initialized(HandType type) 
+    public void Initialized(HandType type)
     {
         _type = type;
     }
 
-    public FightResultType Fight(Hand hand) 
+    public FightResultType Fight(Hand hand)
     {
-
         if (hand.Type == Type) return FightResultType.Draw;
 
-        switch (Type) 
+        switch (Type)
         {
-            case HandType.Paper: 
+            case HandType.Paper:
                 if (hand.Type == HandType.Stone) return FightResultType.Win;
                 if (hand.Type == HandType.Scissors) return FightResultType.Lose;
                 break;
@@ -43,13 +30,13 @@ public class Hand : MonoBehaviour
                 if (hand.Type == HandType.Paper) return FightResultType.Lose;
                 break;
         }
+
         return FightResultType.Draw;
     }
 
-    public void SetRandomType() 
+    public void SetRandomType()
     {
         int enumId = UnityEngine.Random.Range(0, 4);
         _type = (HandType)enumId;
-    }    
-
+    }
 }

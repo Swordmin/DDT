@@ -1,15 +1,22 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using UnityEngine;
-using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(HandVizualizer))]
 
 public class PlayerHand : Hand
 {
     [SerializeField] private Vector2 _touchPostition;
-    [SerializeField] private float _damage; //TODO
+    [SerializeField] private float _damage; 
     [SerializeField] private TextEngine _textEngine;
+    private SceneFightService _fightService;
     public event System.Action<float> OnWin;
+
+    private void Start()
+    {
+        _fightService = AllSceneServices.SceneServices.GetService<SceneFightService>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -41,7 +48,7 @@ public class PlayerHand : Hand
         _damage = Random.Range(1, 10);
         OnWin?.Invoke(_damage);
         TextEngine text = Instantiate(_textEngine, transform.position, Quaternion.identity);
-        text.Draw($"{_damage}", Color.white, new Vector2(SceneFightEngine.Engine.PlayerBody.transform.position.x, SceneFightEngine.Engine.PlayerBody.transform.position.y + 1));
+        text.Draw($"{_damage}", Color.white, new Vector2(_fightService.PlayerBody.transform.position.x, _fightService.PlayerBody.transform.position.y + 1));
         hand.Lose();
     }
 

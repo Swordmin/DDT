@@ -21,6 +21,8 @@ public class Spawner : MonoBehaviour
     [SerializeField] private bool _spawn;
     [SerializeField] private List<EnemyHand> _hands;
 
+    private SceneFightService _fightService;
+    
     public event System.Action OnSpawnEnd;
 
     private void Awake()
@@ -34,7 +36,8 @@ public class Spawner : MonoBehaviour
 
     private void Start()
     {
-        OnSpawnEnd += SceneFightEngine.Engine.EndFight;
+        _fightService = AllSceneServices.SceneServices.GetService<SceneFightService>();
+        OnSpawnEnd += _fightService.EndFight;
     }
 
     private void OnDrawGizmosSelected()
@@ -45,7 +48,7 @@ public class Spawner : MonoBehaviour
 
     private void OnDestroy()
     {
-        OnSpawnEnd -= SceneFightEngine.Engine.EndFight;
+        OnSpawnEnd -= _fightService.EndFight;
     }
 
     public void UpdateTime(float time) => _time = time;

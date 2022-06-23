@@ -1,16 +1,20 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class SceneFightEngine : MonoBehaviour
+public class SceneFightService : Service
 {
-    public static SceneFightEngine Engine;
     public PlayerBody PlayerBody;
     public EnemyBody CurrentEnemyBody;
     [SerializeField] private FightField _field;
 
+    protected override void Register()
+    {
+        AllSceneServices.SceneServices.RegisterService(this);
+    }
+
     private void Awake()
     {
-        if (!Engine)
-            Engine = this;
+        Register();
     }
 
     private void Update()
@@ -29,12 +33,6 @@ public class SceneFightEngine : MonoBehaviour
         PlayerBody.Damage += damage;
     }
 
-    private void StartFight()
-    {
-        _field.UpdateData(CurrentEnemyBody.Data);
-        _field.StartFight();
-    }
-
     public void EndFight() 
     {
         PlayerBody.Atack(CurrentEnemyBody);
@@ -42,4 +40,9 @@ public class SceneFightEngine : MonoBehaviour
         PlayerBody.DamageClear();
     }
 
+    private void StartFight()
+    {
+        _field.UpdateData(CurrentEnemyBody.Data);
+        _field.StartFight();
+    }
 }
