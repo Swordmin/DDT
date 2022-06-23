@@ -11,6 +11,9 @@ public class AssetEnemy : ScriptableObject
     [SerializeField] private float _maxHealth;
     public float MaxHealth => _maxHealth;
 
+    [SerializeField] private float _damage;
+    public float Damage => _damage;
+    
     [SerializeField] private float _atackTime;
     public float AtackTime => _atackTime;
 

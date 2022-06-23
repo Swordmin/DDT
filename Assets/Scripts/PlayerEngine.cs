@@ -8,6 +8,10 @@ public class PlayerEngine : MonoBehaviour
 
     private void Awake()
     {
+        AllSceneServices.SceneServices.GetService<FightField>().InitializedHand(_hand, out PlayerHand handSpawn);
+        {
+            _hand = handSpawn;
+        }
         _hand.OnWin += AddDamage;
     }
 

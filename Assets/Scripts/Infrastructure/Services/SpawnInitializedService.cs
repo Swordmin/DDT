@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -11,11 +10,6 @@ public class SpawnInitializedService : Service
     {
         AllSceneServices.SceneServices.RegisterService(this);
     }
-    
-    private void Awake()
-    {
-        Register();
-    }
 
     public void Enter()
     {
@@ -23,6 +17,11 @@ public class SpawnInitializedService : Service
         {
             spawn.Initialized();
         }
+    }
+
+    private void Awake()
+    {
+        Register();
     }
 
     public void AddSpawn(SpawnInitialized spawn)

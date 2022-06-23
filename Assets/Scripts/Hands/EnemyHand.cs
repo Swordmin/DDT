@@ -6,23 +6,23 @@ using UnityEngine.Events;
 [RequireComponent(typeof(BoxCollider2D))]
 public class EnemyHand : Hand
 {
-    private BoxCollider2D _collider;
     [HideInInspector] public UnityEvent OnDie;
-    private Spawner _spawner;
-
-    private void OnEnable()
-    {
-        SetRandomType();
-    }
+    private BoxCollider2D _collider;
+    private FieldSpawner _fieldSpawner;
 
     private void Awake()
     {
         _collider = GetComponent<BoxCollider2D>();
     }
 
+    private void OnEnable()
+    {
+        SetRandomType();
+    }
+
     private void Start()
     {
-        _spawner.OnSpawnEnd += Lose;
+        _fieldSpawner.OnSpawnEnd += Lose;
         transform.DOLocalMoveX(-15, 5).SetEase(Ease.Linear).OnComplete(() =>
         {
             OnDie?.Invoke();
@@ -32,10 +32,10 @@ public class EnemyHand : Hand
 
     private void OnDestroy()
     {
-        _spawner.OnSpawnEnd -= Lose;
+        _fieldSpawner.OnSpawnEnd -= Lose;
     }
 
-    public void UpdateSpawner(Spawner spawner) => _spawner = spawner;
+    public void UpdateSpawner(FieldSpawner fieldSpawner) => _fieldSpawner = fieldSpawner;
 
     public void Lose() 
     {

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SceneFightService : Service
 {
@@ -33,7 +32,7 @@ public class SceneFightService : Service
         PlayerBody.Damage += damage;
     }
 
-    public void EndFight() 
+    public void EndFight()
     {
         PlayerBody.Atack(CurrentEnemyBody);
         CurrentEnemyBody.Atack(PlayerBody);

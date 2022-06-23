@@ -1,15 +1,32 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
-public class FightField : MonoBehaviour
+public class FightField : Service
 {
-    [SerializeField] private Spawner _spawner;
-    [SerializeField] AssetEnemy _data;
+    [SerializeField] private FieldSpawner _fieldSpawner;
+    [SerializeField] private AssetEnemy _data;
+    [SerializeField] private Transform _playerHandSpawnPosition;
 
+    protected override void Register()
+    {
+        AllSceneServices.SceneServices.RegisterService(this);
+    }
+
+    private void Awake()
+    {
+        Register();
+    }
+
+    public void InitializedHand(PlayerHand hand, out  PlayerHand handSpawn)
+    {
+        handSpawn = Instantiate(hand, _playerHandSpawnPosition.position, hand.transform.rotation);
+    }
+    
     public void StartFight() 
     {
-        _spawner.UpdateCooldown(_data.AtackCooldown);
-        _spawner.UpdateTime(_data.AtackTime);
-        _spawner.StartSpawn();
+        _fieldSpawner.UpdateCooldown(_data.AtackCooldown);
+        _fieldSpawner.UpdateTime(_data.AtackTime);
+        _fieldSpawner.StartSpawn();
     }
 
     public void UpdateData(AssetEnemy data)

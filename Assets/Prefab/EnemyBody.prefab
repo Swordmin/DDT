@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5429628794457699599}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.388, y: 0.59, z: -8.10442}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5429628794519267020}
@@ -148,11 +148,9 @@ MonoBehaviour:
   _maxHealth: 100
   _currentHealth: 0
   _damage: 0
-  OnHealthChange:
-    m_PersistentCalls:
-      m_Calls: []
+  _atackHand: {fileID: 8379013866960123465, guid: b1f4eb8672c6b8345bdfcab552512334, type: 3}
   _data: {fileID: 11400000, guid: 81b2cb73204b3f34a9ebdb7a8d60ea9d, type: 2}
-  _textEngine: {fileID: 5432447347020188690, guid: 7a6a0becd22f19947bc61a34cb463793, type: 3}
+  _text: {fileID: 5432447347020188690, guid: 7a6a0becd22f19947bc61a34cb463793, type: 3}
 --- !u!1 &5429628794519267021
 GameObject:
   m_ObjectHideFlags: 0

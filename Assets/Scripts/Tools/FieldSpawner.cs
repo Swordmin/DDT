@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
-public class Spawner : MonoBehaviour
+public class FieldSpawner : MonoBehaviour
 {
+    public event Action OnSpawnEnd;
+
     [SerializeField] private EnemyHand _spawnObject;
 
     [SerializeField] private float _sizeX;
@@ -22,8 +23,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private List<EnemyHand> _hands;
 
     private SceneFightService _fightService;
-    
-    public event System.Action OnSpawnEnd;
+
 
     private void Awake()
     {
@@ -60,25 +60,24 @@ public class Spawner : MonoBehaviour
         StartCoroutine(SpawnTick());
     }
 
-    public void StopSpawn() 
+    public void StopSpawn()
     {
         _spawn = false;
         _hands.Clear();
     }
 
-  
 
-    private void Spawn() 
+    private void Spawn()
     {
-        float x = Random.Range(transform.position.x -_sizeX,transform.position.x + _sizeX);
-        float y = Random.Range(transform.position.y -_sizeY, transform.position.y + _sizeY);
+        float x = Random.Range(transform.position.x - _sizeX, transform.position.x + _sizeX);
+        float y = Random.Range(transform.position.y - _sizeY, transform.position.y + _sizeY);
         EnemyHand handSpawn = Instantiate(_spawnObject, new Vector2(x, y), Quaternion.identity);
         _hands.Add(handSpawn);
         handSpawn.UpdateSpawner(this);
         handSpawn.OnDie.AddListener(() => _hands.Remove(handSpawn));
     }
 
-    private IEnumerator SpawnTick() 
+    private IEnumerator SpawnTick()
     {
         if (_endlessly)
             while (_spawn)
@@ -97,7 +96,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnTimer() 
+    private IEnumerator SpawnTimer()
     {
         yield return new WaitForSeconds(_time);
         OnSpawnEnd?.Invoke();

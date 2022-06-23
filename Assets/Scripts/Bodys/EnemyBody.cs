@@ -1,18 +1,28 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class EnemyBody : Body
 {
     [SerializeField] private AssetEnemy _data;
     [SerializeField] private TextEngine _text;
-
+    private SceneFightService _fightService;
     public AssetEnemy Data => _data;
+
+    private void Awake()
+    {
+        _fightService = AllSceneServices.SceneServices.GetService<SceneFightService>();
+    }
 
     public void Initialized(AssetEnemy data)
     {
         _data = data;
         SetMaxHealth(_data.MaxHealth);
+        SetDamage(data.Damage);
+        if(!_fightService.CurrentEnemyBody)
+            _fightService.UpdateEnemy(this);
     }
     
+
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);

@@ -1,5 +1,4 @@
-﻿using System;
-using DG.Tweening;
+﻿using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -7,12 +6,20 @@ using Random = UnityEngine.Random;
 
 public class PlayerHand : Hand
 {
-    [SerializeField] private Vector2 _touchPostition;
-    [SerializeField] private float _damage; 
-    [SerializeField] private TextEngine _textEngine;
-    private SceneFightService _fightService;
     public event System.Action<float> OnWin;
+    
+    [SerializeField] private Vector2 _touchPostition;
+    [SerializeField] private float _damage;
+    [SerializeField] private TextEngine _textEngine;
 
+    [Header("Move area"), Space(10)]
+    [SerializeField,Range(-10,10)]private float _clampXMin;
+    [SerializeField,Range(-10,10)]private float _clampXMax;
+    [SerializeField,Range(-10,10)] private float _clampYMin;
+    [SerializeField,Range(-10,10)]private float _clampYMax;
+    
+    private SceneFightService _fightService;
+    
     private void Start()
     {
         _fightService = AllSceneServices.SceneServices.GetService<SceneFightService>();
@@ -29,11 +36,16 @@ public class PlayerHand : Hand
 
     private void Update()
     {
+        HandMove();
+    }
+
+    private void HandMove()
+    {
         _touchPostition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        var moveY = _touchPostition.y;
-        moveY = Mathf.Clamp(moveY, -4.5f, -0.5f);
-        var moveX = _touchPostition.x;
-        moveX = Mathf.Clamp(moveX, -10f, -5f);
+        float moveY = _touchPostition.y;
+        moveY = Mathf.Clamp(moveY, _clampYMin, _clampYMax);
+        float moveX = _touchPostition.x;
+        moveX = Mathf.Clamp(moveX, _clampXMin, _clampXMax);
         transform.DOMove(new Vector2(moveX, moveY), 0.2f);
     }
 
@@ -42,6 +54,7 @@ public class PlayerHand : Hand
 
 
     }
+
 
     private void Win(EnemyHand hand) 
     {
