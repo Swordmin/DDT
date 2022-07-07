@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(HandVizualizer))]
@@ -19,10 +20,11 @@ public class PlayerHand : Hand
     [SerializeField,Range(-10,10)]private float _clampYMax;
     
     private SceneFightService _fightService;
-    
-    private void Start()
+
+    [Inject]
+    private void Constructor(SceneFightService fightService)
     {
-        _fightService = AllSceneServices.SceneServices.GetService<SceneFightService>();
+        _fightService = fightService;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

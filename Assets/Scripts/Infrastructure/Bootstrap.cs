@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using Zenject;
 
-public abstract class Bootstrap : MonoBehaviour
+public abstract class Bootstrap : MonoInstaller
 {
     public virtual void Enter()
     {

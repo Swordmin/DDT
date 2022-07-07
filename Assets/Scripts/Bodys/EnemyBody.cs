@@ -1,18 +1,19 @@
 ﻿using System;
 using UnityEngine;
+using Zenject;
 
 public class EnemyBody : Body
 {
     [SerializeField] private AssetEnemy _data;
     [SerializeField] private TextEngine _text;
-    private SceneFightService _fightService;
+    [SerializeField] private SceneFightService _fightService;
     public AssetEnemy Data => _data;
 
-    private void Awake()
+    [Inject]
+    private void Constructor(SceneFightService fightService)
     {
-        _fightService = AllSceneServices.SceneServices.GetService<SceneFightService>();
+        _fightService = fightService;
     }
-
     public void Initialized(AssetEnemy data)
     {
         _data = data;

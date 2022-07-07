@@ -1,9 +1,14 @@
-﻿public class BootstrapScene : Bootstrap
+﻿using UnityEngine;
+
+public class BootstrapScene : Bootstrap
 {
     public static BootstrapScene Bootstrap;
-    private void Awake()
+    [SerializeField] private SpawnInitializedService _spawnInitializedService;
+    [SerializeField] private SceneFightService _sceneFightService;
+
+    public override void InstallBindings()
     {
-        if (!Bootstrap)
-            Bootstrap = this;
+        Container.BindInstance(_spawnInitializedService).AsSingle();
+        Container.BindInstance(_sceneFightService).AsSingle();
     }
 }

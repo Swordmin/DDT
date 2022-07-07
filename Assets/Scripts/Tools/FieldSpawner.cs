@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 public class FieldSpawner : MonoBehaviour
@@ -24,7 +25,12 @@ public class FieldSpawner : MonoBehaviour
 
     private SceneFightService _fightService;
 
-
+    [Inject]
+    private void Constructor(SceneFightService fightService)
+    {
+        _fightService = fightService;
+    }
+    
     private void Awake()
     {
         if (_playOnAwake)
@@ -33,10 +39,8 @@ public class FieldSpawner : MonoBehaviour
             StartCoroutine(SpawnTick());
         }
     }
-
     private void Start()
     {
-        _fightService = AllSceneServices.SceneServices.GetService<SceneFightService>();
         OnSpawnEnd += _fightService.EndFight;
     }
 
