@@ -8,7 +8,7 @@ public class PlayerHand : Hand
 {
     public event System.Action<float> OnWin;
     
-    [SerializeField] private Vector2 _touchPostition;
+    [SerializeField] private Vector2 _touchPostition; 
     [SerializeField] private float _damage;
     [SerializeField] private TextEngine _textEngine;
 
@@ -35,7 +35,7 @@ public class PlayerHand : Hand
     }
 
     private void Update()
-    {
+    { 
         HandMove();
     }
 
